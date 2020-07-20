@@ -1,3 +1,3 @@
 # Mission-to-Mars
 # Portfolio screen shot
-![](Portfolio%20_%20screenshot.png)
+![portfolio](https://github.com/tranchan72/Mission-to-Mars/blob/master/Portfolio_screenshot.PNG)
