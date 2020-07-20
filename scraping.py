@@ -15,6 +15,10 @@ def scrape_all():
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
+        "cerberus_image": cerberus_image(browser),
+        "schiaparelli_image": schiaparelli_image(browser),
+        "syrtisMajor_image": syrtisMajor_image(browser),
+        "vallesMarineris_image": vallesMarineris_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now()
     }
@@ -55,17 +59,17 @@ def mars_news(browser):
 # ### Set up URL for space image
 # Visit URL
 def featured_image(browser):
-    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+    url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
 
     # ### Find and click the full image button
-    full_image_elem = browser.find_by_id('wide-image-toggle')[0]
+    full_image_elem = browser.find_by_id('full_image')[0]
     full_image_elem.click()
 
     # ### Find the more info button and click that
-    #browser.is_element_present_by_text('more info', wait_time=1)
-    #more_info_elem = browser.links.find_by_partial_text('more info')
-    #more_info_elem.click()
+    browser.is_element_present_by_text('more info', wait_time=1)
+    more_info_elem = browser.links.find_by_partial_text('more info')
+    more_info_elem.click()
 
     # ### Parse the resulting html with soup
     html = browser.html
@@ -74,14 +78,110 @@ def featured_image(browser):
     # Add try/except for error handling
     try:
         # ### Find the relative image url
-        img_url_rel = img_soup.select_one('figure.wide-image a img').get("src")
+        img_url_rel = img_soup.select_one('figure.lede a img').get("src")
     except AttributeError:
         return None    
 
     # ### Add the base URL to code
     # Use the base URL to create an absolute URL
-    img_url = f'https://astrogeology.usgs.gov{img_url_rel}'
+    img_url = f'https://www.jpl.nasa.gov{img_url_rel}'
     return img_url
+
+def cerberus_image(browser):
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+    browser.visit(url)
+
+    # ### Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')[0]
+    full_image_elem.click()
+    
+    # ### Parse the resulting html with soup
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    # Add try/except for error handling
+    try:
+        # ### Find the relative image url
+        cerberus_img_url_rel = img_soup.select_one('img.wide-image').get("src")
+    except AttributeError:
+        return None    
+
+    # ### Add the base URL to code
+    # Use the base URL to create an absolute URL
+    cerberus_img_url = f'https://astrogeology.usgs.gov{cerberus_img_url_rel}'
+    return cerberus_img_url
+
+def schiaparelli_image(browser):
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+    browser.visit(url)
+
+    # ### Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')[0]
+    full_image_elem.click()
+    
+    # ### Parse the resulting html with soup
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    # Add try/except for error handling
+    try:
+        # ### Find the relative image url
+        schiaparelli_img_url_rel = img_soup.select_one('img.wide-image').get("src")
+    except AttributeError:
+        return None    
+
+    # ### Add the base URL to code
+    # Use the base URL to create an absolute URL
+    schiaparelli_img_url = f'https://astrogeology.usgs.gov{schiaparelli_img_url_rel}'
+    return schiaparelli_img_url
+
+def syrtisMajor_image(browser):
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+    browser.visit(url)
+
+    # ### Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')[0]
+    full_image_elem.click()
+    
+    # ### Parse the resulting html with soup
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    # Add try/except for error handling
+    try:
+        # ### Find the relative image url
+        syrtisMajor_image_img_url_rel = img_soup.select_one('img.wide-image').get("src")
+    except AttributeError:
+        return None    
+
+    # ### Add the base URL to code
+    # Use the base URL to create an absolute URL
+    syrtisMajor_image_img_url = f'https://astrogeology.usgs.gov{syrtisMajor_image_img_url_rel}'
+    return syrtisMajor_image_img_url
+
+def vallesMarineris_image(browser):
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+    browser.visit(url)
+
+    # ### Find and click the full image button
+    full_image_elem = browser.find_by_id('wide-image-toggle')[0]
+    full_image_elem.click()
+    
+    # ### Parse the resulting html with soup
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+
+    # Add try/except for error handling
+    try:
+        # ### Find the relative image url
+        vallesMarineris_image_img_url_rel = img_soup.select_one('img.wide-image').get("src")
+    except AttributeError:
+        return None    
+
+    # ### Add the base URL to code
+    # Use the base URL to create an absolute URL
+    vallesMarineris_image_img_url = f'https://astrogeology.usgs.gov{vallesMarineris_image_img_url_rel}'
+    return vallesMarineris_image_img_url
 
 # ## Scrape Mars Data: Mars Facts
 # ### Scraping whole table of Mars Facts
